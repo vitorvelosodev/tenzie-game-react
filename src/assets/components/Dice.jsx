@@ -1,7 +1,8 @@
-export default function Dice() {
+export default function Dice(props) {
+
   return (
-    <div className="h-10 w-10 bg-slate-500 grid place-items-center rounded shadow-dice-shadow">
-      <span>1</span>
+    <div className="h-10 w-10 bg-[#FFFFFF] grid place-items-center rounded shadow-dice-shadow .dice-selected">
+      <span>{props.random}</span>
     </div>
   )
 }

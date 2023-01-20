@@ -15,7 +15,8 @@ module.exports = {
         'dice-shadow': '0px 5px 3px rgba(0, 0, 0, 0.2)'
       },
       backgroundColor: {
-        'outer': 'rgba(11, 36, 52, 1)'
+        'outer': 'rgba(11, 36, 52, 1)',
+        'inner': '#F5F5F5'
       }
     },
   },

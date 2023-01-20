@@ -1,5 +1,8 @@
-export default function GameButton() {
+export default function GameButton(props) {
   return (
-    <button className="px-12 py-3 text-white bg-indigo-700 rounded-lg shadow-lg">Roll</button>
+    <button
+      className="text-white bg-indigo-700 rounded-md shadow-lg h-9 w-24 my-2"
+      onClick={props.handleClick}
+    >Roll</button>
   )
 }
