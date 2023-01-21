@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import Conf from './assets/components/Conf'
 import Game from './assets/components/Game'
 import GameButton from './assets/components/GameButton'
 import Header from './assets/components/Header'
+import Swal from 'sweetalert2'
+
 
 export default function App() {
+  const numberOfDices = 10
+
   // Generates the initial array of numbers os the dice elements
   function generateNumbers() {
     const diceObjArray = []
-    for (let i = 0; i < 10; i += 1) {
+    for (let i = 0; i < numberOfDices; i += 1) {
 
       diceObjArray.push(
         {
@@ -27,7 +32,7 @@ export default function App() {
   function changeDices() {
     setDicesObj(prevState => {
       const diceObjArray = []
-      for (let i = 0; i < 10; i += 1) {
+      for (let i = 0; i < numberOfDices; i += 1) {
         prevState[i].clicked ? diceObjArray.push(prevState[i]) : 
           diceObjArray.push(
             {
@@ -63,6 +68,8 @@ export default function App() {
     })
   }
 
+  const [confetti, setConfetti] = useState()
+
   useEffect(() => {
     console.log('changed')
     const checkWinArray = dicesObj.map(num => num.clicked ? num.number : undefined)
@@ -70,10 +77,34 @@ export default function App() {
     let winning = true
     checkWinArray.forEach(num => {
       for (let i = 0; i < checkWinArray.length; i += 1) {
-        if (num !== checkWinArray[i]) winning = false
+        if (num !== checkWinArray[i] || num === undefined) winning = false
       }
     })
-    if (winning === true) console.log('Winner!')
+    if (winning === true) {
+      setConfetti(<Conf />)
+      setTimeout(async () => {
+        await Swal.fire({
+          title: 'Congrats!\n You win!',
+          icon: 'success',
+          width: 400,
+          confirmButtonText: "Let's play again!",
+          padding: '3em',
+          color: '#716add',
+          background: '#fff',
+          backdrop: `
+            rgba(0,0,123,0.1)
+            url('./nyan-cat.gif')
+            left top
+            no-repeat
+          `,
+          showClass: {
+            popup: 'animate__animated animate__zoomIn'
+          },
+        })
+        document.location.reload(true)
+      }
+      , 1500)
+    }
   }, [dicesObj])
 
   return (
@@ -86,6 +117,7 @@ export default function App() {
       <GameButton
         handleClick={changeDices}
       />
+      {confetti}
     </div>
   )
 }
